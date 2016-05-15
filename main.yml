@@ -46,6 +46,7 @@
               groups=cluster,nodes
     with_items: nodes.results
 
-- hosts: cluster
+- name: Install ceph Packages
+  hosts: cluster
   roles:
     - ceph-delpoy
