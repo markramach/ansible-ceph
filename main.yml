@@ -37,12 +37,12 @@
     register: nodes
 
   - name: Add Node Hosts To Inventory
-    add_host: hostname='admin-node'
+    add_host: hostname={{ item.lxc_container.init_pid }}
               ansible_ssh_host={{ item.lxc_container.ips[0] }}
               ansible_ssh_user=ubuntu
               ansible_ssh_pass=ubuntu
               groups=cluster,nodes
-    with_items: '{{ nodes.results }}'
+    with_items: nodes.results
 
 - hosts: cluster
   tasks:
