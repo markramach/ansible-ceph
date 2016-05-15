@@ -17,7 +17,7 @@
     register: admin_node
 
   - name: Add Admin Node Host To Inventory
-    debug: var='{{ admin_node }}'
+    debug: var=admin_node
 
   - name: Provision LXC Containers (cluster nodes)
     lxc_container:
@@ -33,4 +33,4 @@
     register: nodes
 
   - name: Add Node Hosts To Inventory
-    debug: var='{{ nodes }}'
+    debug: var=nodes
