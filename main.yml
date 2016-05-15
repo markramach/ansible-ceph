@@ -1,0 +1,28 @@
+- name: Ceph Cluster
+  hosts: localhost
+  connection: localhost
+  tasks:
+
+  #
+  # Provision LXC Containers For Development.
+  #
+
+  - name: Provision LXC Containers (admin node)
+    lxc_container:
+      name: admin-node
+      container_log: true
+      template: ubuntu
+      state: started
+      template_options: --release trusty
+
+  - name: Provision LXC Containers (cluster nodes)
+    lxc_container:
+      name: admin-node-{{ item }}
+      container_log: true
+      template: ubuntu
+      state: started
+      template_options: --release trusty
+    with_items:
+    - 1
+    - 2
+    - 3
