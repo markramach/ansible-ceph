@@ -48,4 +48,4 @@
 
 - hosts: cluster
   roles:
-  - ceph-delpoy
+    - ceph-delpoy
