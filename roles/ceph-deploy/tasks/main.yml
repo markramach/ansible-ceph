@@ -3,5 +3,5 @@
   become: true
 
 - name: Ensure Release In Source List
-  lineinfile: dest=/etc/apt/sources.list.d/ceph.list line='deb http://download.ceph.com/debian-jewel/ trusty main' regex='.*debian-jewel.*'
+  lineinfile: dest=/etc/apt/sources.list.d/ceph.list line='deb http://download.ceph.com/debian-jewel/ trusty main' regexp='.*debian-jewel.*'
   become: true
