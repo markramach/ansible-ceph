@@ -48,5 +48,3 @@
   tasks:
   - name: uname
     shell: uname -a
-    become: true
-    become_user: root
