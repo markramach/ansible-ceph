@@ -17,11 +17,15 @@
     register: admin_node
 
   - name: Add Admin Node Host To Inventory
-    debug: var=admin_node
+    add_host: hostname='admin-node'
+              ansible_ssh_host={{ lxc_container.admin_node.ips[0] }}
+              ansible_ssh_user=ubuntu
+              ansible_ssh_pass=ubuntu
+              groups=cluster,admin
 
   - name: Provision LXC Containers (cluster nodes)
     lxc_container:
-      name: admin-node-{{ item }}
+      name: cluster-node-{{ item }}
       container_log: true
       template: ubuntu
       state: started
@@ -33,4 +37,14 @@
     register: nodes
 
   - name: Add Node Hosts To Inventory
-    debug: var=nodes
+    add_host: hostname='admin-node'
+              ansible_ssh_host={{ lxc_container.admin_node.ips[0] }}
+              ansible_ssh_user=ubuntu
+              ansible_ssh_pass=ubuntu
+              groups=cluster,nodes
+    with_items: '{{ nodes.results }}'
+
+- hosts: cluster
+  tasks:
+  - name: uname
+    shell: uname -a
