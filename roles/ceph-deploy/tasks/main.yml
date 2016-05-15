@@ -1,0 +1,5 @@
+- name: Add ceph Repository
+- apt_key: url=https://download.ceph.com/keys/release.asc state=present
+
+- name: Ensure Release In Source List
+  lineinfile: dest=/etc/apt/sources.list.d/ceph.list line='deb http://download.ceph.com/debian-jewel/ trusty main' regex='.*debian-jewel.*'
