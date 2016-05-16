@@ -50,5 +50,6 @@
 
 - name: Install ceph Packages
   hosts: cluster
+  become: true
   roles:
   - ceph-deploy

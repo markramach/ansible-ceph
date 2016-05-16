@@ -1,10 +1,8 @@
 - name: Add ceph-deploy Repository
   apt_key: url=https://download.ceph.com/keys/release.asc validate_certs=no state=present
-  become: true
 
 - name: Ensure Release In Source List
   lineinfile: dest=/etc/apt/sources.list.d/ceph.list line='deb http://download.ceph.com/debian-jewel/ trusty main' regexp='.*debian-jewel.*' create=yes state=present
-  become: true
 
 - name: Update Repository
   apt: update_cache=yes
