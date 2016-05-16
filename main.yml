@@ -21,8 +21,8 @@
     - cluster-node-3
     register: nodes
 
-- name: Add Admin Node Host To Inventory
-    add_host: hostname='admin-node'
+  - name: Add Admin Node Host To Inventory
+    add_host: hostname=admin-node
               ansible_ssh_host={{ item.lxc_container.ips[0] }}
               ansible_ssh_user=ubuntu
               ansible_ssh_pass=ubuntu
