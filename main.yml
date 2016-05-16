@@ -7,36 +7,29 @@
   # Provision LXC Containers For Development.
   #
 
-  - name: Provision LXC Containers (admin node)
-    lxc_container:
-      name: admin-node
-      container_log: true
-      template: ubuntu
-      state: started
-      template_options: --release trusty
-    register: admin_node
-
-  - name: Add Admin Node Host To Inventory
-    add_host: hostname='admin-node'
-              ansible_ssh_host={{ admin_node.lxc_container.ips[0] }}
-              ansible_ssh_user=ubuntu
-              ansible_ssh_pass=ubuntu
-              ansible_become_user=root
-              ansible_become_pass=ubuntu
-              groups=cluster,admin
-
   - name: Provision LXC Containers (cluster nodes)
     lxc_container:
-      name: cluster-node-{{ item }}
+      name: "{{ item }}"
       container_log: true
       template: ubuntu
       state: started
       template_options: --release trusty
     with_items:
-    - 1
-    - 2
-    - 3
+    - admin-node
+    - cluster-node-1
+    - cluster-node-2
+    - cluster-node-3
     register: nodes
+
+- name: Add Admin Node Host To Inventory
+    add_host: hostname='admin-node'
+              ansible_ssh_host={{ item.lxc_container.ips[0] }}
+              ansible_ssh_user=ubuntu
+              ansible_ssh_pass=ubuntu
+              ansible_become_user=root
+              ansible_become_pass=ubuntu
+              groups=cluster,admin
+    with_items: nodes.results[0]
 
   - name: Add Node Hosts To Inventory
     add_host: hostname={{ item.lxc_container.init_pid }}
@@ -46,7 +39,7 @@
               ansible_become_user=root
               ansible_become_pass=ubuntu
               groups=cluster,nodes
-    with_items: nodes.results
+    with_items: nodes.results[1:]
 
 - name: Install ceph Packages
   hosts: cluster
