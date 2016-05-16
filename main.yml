@@ -22,7 +22,7 @@
     register: nodes
 
   - debug: var=item
-    with_items: nodes.results[0]
+    with_items: nodes.results
 
   - name: Add Admin Node Host To Inventory
     add_host: hostname=admin-node
