@@ -22,7 +22,7 @@
     register: nodes
 
   - debug: var=item.lxc_container
-    with_items: nodes.results
+    with_items: nodes.results[0]
 
   - name: Add Admin Node Host To Inventory
     add_host: hostname=admin-node
