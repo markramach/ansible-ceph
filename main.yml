@@ -21,7 +21,7 @@
     - cluster-node-3
     register: nodes
 
-  - debug: var=item.lxc_container
+  - debug: var=item
     with_items: nodes.results[0]
 
   - name: Add Admin Node Host To Inventory
