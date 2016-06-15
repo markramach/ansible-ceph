@@ -54,3 +54,9 @@
   roles:
   - ceph-deploy
   - ntp
+
+- name: SSH Configuration
+  hosts: admin
+  become: true
+  roles:
+  - ssh-keygen
